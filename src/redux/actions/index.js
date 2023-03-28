@@ -1,8 +1,8 @@
 // Coloque aqui suas actions
 // ACTIONS TYPES
-export const ADD_EMAIL = 'ADD_EMAIL';
+export const SAVE_EMAIL = 'SAVE_EMAIL';
 // ACTIONS CREATORS
-export const addEmail = (email) => ({
-  type: ADD_EMAIL,
+export const saveEmail = (email) => ({
+  type: SAVE_EMAIL,
   email,
 });
