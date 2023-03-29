@@ -19,7 +19,7 @@ export const fetchAwesomeAPI = () => (dispatch) => {
   fetch(URL)
     .then((response) => response.json())
     .then((currencies) => dispatch(saveCurrencies(Object.keys(currencies)
-      .filter((currencie) => currencie !== 'USDT'))));
+      .filter((currency) => currency !== 'USDT'))));
 };
 
 // Object.entries(currencies)

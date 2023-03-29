@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 class WalletForm extends Component {
   constructor(props) {
@@ -21,6 +23,7 @@ class WalletForm extends Component {
 
   render() {
     const { value, description } = this.state;
+    const { currencies } = this.props;
     return (
       <>
         <div>WalletForm</div>
@@ -47,6 +50,13 @@ class WalletForm extends Component {
             />
           </label>
           <br />
+          <select data-testid="currency-input">
+            {currencies.map((currency) => (
+              <option key={ currency } value={ currency }>
+                {currency}
+              </option>
+            ))}
+          </select>
           <button type="submit">Enviar</button>
         </form>
       </>
@@ -54,4 +64,12 @@ class WalletForm extends Component {
   }
 }
 
-export default WalletForm;
+const mapStateToProps = ({ wallet }) => ({
+  currencies: wallet.currencies,
+});
+
+WalletForm.propTypes = {
+  currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
+};
+
+export default connect(mapStateToProps)(WalletForm);
