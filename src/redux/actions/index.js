@@ -3,11 +3,18 @@ const URL = 'https://economia.awesomeapi.com.br/json/all';
 // ACTIONS TYPES
 export const SAVE_EMAIL = 'SAVE_EMAIL';
 export const SAVE_CURRENCIES = 'SAVE_CURRENCIES';
+export const ADD_EXPENSE = 'ADD_EXPENSE';
 
 // ACTIONS CREATORS
 export const saveEmail = (email) => ({
   type: SAVE_EMAIL,
   email,
+});
+
+export const addExpense = (localState, id) => ({
+  type: ADD_EXPENSE,
+  localState,
+  id,
 });
 
 export const saveCurrencies = (currencies) => ({
@@ -18,8 +25,7 @@ export const saveCurrencies = (currencies) => ({
 export const fetchAwesomeAPI = () => (dispatch) => {
   fetch(URL)
     .then((response) => response.json())
-    .then((currencies) => dispatch(saveCurrencies(Object.keys(currencies)
-      .filter((currency) => currency !== 'USDT'))));
+    .then((currencies) => dispatch(saveCurrencies(currencies)));
 };
 
 // Object.entries(currencies)
