@@ -5,7 +5,6 @@ const INITIAL_STATE = { currencies: [],
   expenses: [],
   editor: false,
   idToEdit: 0,
-  exchangeRates: '',
 };
 
 const wallet = (state = INITIAL_STATE, action) => {
@@ -16,38 +15,12 @@ const wallet = (state = INITIAL_STATE, action) => {
       currencies: Object.keys(action.currencies).filter(
         (currency) => currency !== 'USDT',
       ),
-      exchangeRates: Object.entries(action.currencies)
-        // .map(([key, value]) => ({ [key]: {
-        //   code: value.code,
-        //   name: value.name,
-        //   ask: value.ask,
-        // } })),
-        .reduce((acc, [key, value]) => {
-          if (key === 'USDT') {
-            return [...acc];
-          }
-          return [
-            ...acc,
-            {
-              [key]: {
-                code: value.code,
-                name: value.name,
-                ask: value.ask,
-              },
-            },
-          ];
-        }, []).reduce((acc, cur) => ({ ...acc, ...cur }), {}),
-      // .filter(
-      // (currency) => currency !== 'USDT',
-      // ),
-      // expenses: [...state.expenses, state.expenses.exchangeRates],
-      // expenses: state.currencies.map((elem) => ({ [elem]: elem })),
     };
   case ADD_EXPENSE:
     return {
       ...state,
       expenses: [...state.expenses,
-        { ...action.localState, ...state.exchangeRates, id: state.expenses.length }],
+        { ...action.localState, ...action.exchangeRates, id: state.expenses.length }],
     };
   default:
     return state;

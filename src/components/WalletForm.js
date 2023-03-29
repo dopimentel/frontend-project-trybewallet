@@ -23,7 +23,7 @@ class WalletForm extends Component {
 
   render() {
     const { value, description, currency, method, tag } = this.state;
-    const { currencies, dispatch } = this.props;
+    const { currencies, dispatch, exchangeRates } = this.props;
     return (
       <>
         <div>WalletForm</div>
@@ -32,7 +32,14 @@ class WalletForm extends Component {
             e.preventDefault();
             console.log('cliclou');
             dispatch(fetchAwesomeAPI());
-            dispatch(addExpense(this.state));
+            dispatch(addExpense(this.state, exchangeRates));
+            this.setState({
+              value: '',
+              description: '',
+              currency: '',
+              method: '',
+              tag: '',
+            });
           } }
         >
           <label>
@@ -80,9 +87,9 @@ class WalletForm extends Component {
             value={ method }
             onChange={ this.handleChange }
           >
-            <option value="cash">Dinheiro</option>
-            <option value="credit">Cartão de crédito</option>
-            <option value="debit">Cartão de débito</option>
+            <option>Dinheiro</option>
+            <option>Cartão de crédito</option>
+            <option>Cartão de débito</option>
           </select>
 
           <label htmlFor="tag">Categoria:</label>
@@ -93,11 +100,11 @@ class WalletForm extends Component {
             value={ tag }
             onChange={ this.handleChange }
           >
-            <option value="food">Alimentação</option>
-            <option value="leisure">Lazer</option>
-            <option value="work">Trabalho</option>
-            <option value="transport">Transporte</option>
-            <option value="health">Saúde</option>
+            <option>Alimentação</option>
+            <option>Lazer</option>
+            <option>Trabalho</option>
+            <option>Transporte</option>
+            <option>Saúde</option>
           </select>
 
           <button type="submit">Adicionar despesa</button>
@@ -107,14 +114,17 @@ class WalletForm extends Component {
   }
 }
 
-const mapStateToProps = ({ wallet }) => ({
+const mapStateToProps = ({ wallet, exchangeRates }) => ({
   currencies: wallet.currencies,
   expenses: wallet.expenses,
+  exchangeRates,
 });
 
 WalletForm.propTypes = {
   currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
   dispatch: PropTypes.func.isRequired,
+  exchangeRates: PropTypes.shape({
+  }).isRequired,
 };
 
 export default connect(mapStateToProps)(WalletForm);
