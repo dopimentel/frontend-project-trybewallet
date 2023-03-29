@@ -22,10 +22,10 @@ export const saveCurrencies = (currencies) => ({
   currencies,
 });
 
-export const fetchAwesomeAPI = (callback) => (dispatch) => {
+export const fetchAwesomeAPI = () => (dispatch) => {
   fetch(URL)
     .then((response) => response.json())
-    .then((currencies) => dispatch(callback(currencies)));
+    .then((currencies) => dispatch(saveCurrencies(currencies)));
 };
 
 // Object.entries(currencies)
