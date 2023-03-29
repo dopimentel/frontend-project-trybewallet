@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { fetchAwesomeAPI, saveEmail } from '../redux/actions';
+import { fetchAwesomeAPI, saveCurrencies, saveEmail } from '../redux/actions';
 
 class Login extends React.Component {
   constructor(props) {
@@ -53,7 +53,7 @@ class Login extends React.Component {
           onSubmit={ (e) => {
             e.preventDefault();
             dispatch(saveEmail(email));
-            dispatch(fetchAwesomeAPI());
+            dispatch(fetchAwesomeAPI(saveCurrencies));
             history.push('/carteira');
           } }
         >

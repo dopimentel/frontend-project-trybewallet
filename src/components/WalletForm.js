@@ -9,10 +9,9 @@ class WalletForm extends Component {
     this.state = {
       value: '',
       description: '',
-      currency: '',
-      method: '',
-      tag: '',
-      exchangeRates: '',
+      currency: 'USD',
+      method: 'Dinheiro',
+      tag: 'Alimentação',
     };
     this.handleChange = this.handleChange.bind(this);
   }
@@ -23,7 +22,7 @@ class WalletForm extends Component {
 
   render() {
     const { value, description, currency, method, tag } = this.state;
-    const { currencies, dispatch, exchangeRates } = this.props;
+    const { currencies, dispatch } = this.props;
     return (
       <>
         <div>WalletForm</div>
@@ -32,13 +31,13 @@ class WalletForm extends Component {
             e.preventDefault();
             console.log('cliclou');
             dispatch(fetchAwesomeAPI());
-            dispatch(addExpense(this.state, exchangeRates));
+            dispatch(addExpense(this.state));
             this.setState({
               value: '',
               description: '',
-              currency: '',
-              method: '',
-              tag: '',
+              currency: 'USD',
+              method: 'Dinheiro',
+              tag: 'Alimentação',
             });
           } }
         >
@@ -123,8 +122,8 @@ const mapStateToProps = ({ wallet, exchangeRates }) => ({
 WalletForm.propTypes = {
   currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
   dispatch: PropTypes.func.isRequired,
-  exchangeRates: PropTypes.shape({
-  }).isRequired,
+  // exchangeRates: PropTypes.shape({
+  // }).isRequired,
 };
 
 export default connect(mapStateToProps)(WalletForm);
