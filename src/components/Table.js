@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 class Table extends Component {
   render() {
+    const { expenses, handleEdit, handleDelete } = this.props;
+    console.log(expenses);
     const header = [
       'Descrição',
       'Tag',
@@ -23,9 +27,57 @@ class Table extends Component {
             ))}
           </tr>
         </thead>
+        <tbody>
+          {expenses
+            && expenses.map((expense) => (
+              <tr key={ expense.id }>
+                <td>{expense.description}</td>
+                <td>{expense.tag}</td>
+                <td>{expense.method}</td>
+                <td>{parseFloat(expense.value).toFixed(2)}</td>
+                <td>{expense.exchangeRates[expense.currency].name}</td>
+                <td>
+                  {parseFloat(expense.exchangeRates[expense.currency].ask)
+                    .toFixed(2)}
+
+                </td>
+                <td>
+                  {(
+                    parseFloat(expense.value)
+                    * parseFloat(expense.exchangeRates[expense.currency].ask)
+                  ).toFixed(2)}
+                </td>
+                <td>Real</td>
+                <td>
+                  <button
+                    data-testid="edit-btn"
+                    onClick={ () => handleEdit(expense.id) }
+                  >
+                    Editar
+                  </button>
+                  <button
+                    data-testid="delete-btn"
+                    onClick={ () => handleDelete(expense.id) }
+                  >
+                    Excluir
+                  </button>
+                </td>
+              </tr>
+            ))}
+        </tbody>
       </table>
     );
   }
 }
 
-export default Table;
+const mapStateToProps = ({ wallet }) => ({
+  expenses: wallet.expenses,
+});
+
+Table.propTypes = {
+  expenses: PropTypes.arrayOf({
+    id: PropTypes.number,
+  }).isRequired,
+};
+
+export default connect(mapStateToProps)(Table);
