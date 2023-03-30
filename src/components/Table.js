@@ -10,7 +10,7 @@ class Table extends Component {
   }
 
   render() {
-    const { expenses, handleEdit, handleDelete } = this.props;
+    const { expenses } = this.props;
     console.log(expenses);
     const header = [
       'Descrição',
