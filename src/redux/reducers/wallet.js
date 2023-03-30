@@ -22,6 +22,7 @@ const wallet = (state = INITIAL_STATE, action) => {
       expenses: [...state.expenses,
         { ...action.localState, ...action.exchangeRates, id: state.expenses.length }],
     };
+
   default:
     return state;
   }

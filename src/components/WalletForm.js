@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { addExpense, fetchAwesomeAPI } from '../redux/actions';
+import { addExpense, fetchExchange } from '../redux/actions';
 
 class WalletForm extends Component {
   constructor(props) {
@@ -12,12 +12,23 @@ class WalletForm extends Component {
       currency: 'USD',
       method: 'Dinheiro',
       tag: 'Alimentação',
+      exchangeRates: '',
     };
     this.handleChange = this.handleChange.bind(this);
   }
 
   handleChange({ target: { name, value } }) {
     this.setState({ [name]: value });
+  }
+
+  clearState() {
+    this.setState({
+      value: '',
+      description: '',
+      currency: 'USD',
+      method: 'Dinheiro',
+      tag: 'Alimentação',
+    });
   }
 
   render() {
@@ -29,16 +40,10 @@ class WalletForm extends Component {
         <form
           onSubmit={ (e) => {
             e.preventDefault();
-            console.log('cliclou');
-            dispatch(fetchAwesomeAPI());
+            dispatch(fetchExchange());
             dispatch(addExpense(this.state));
-            this.setState({
-              value: '',
-              description: '',
-              currency: 'USD',
-              method: 'Dinheiro',
-              tag: 'Alimentação',
-            });
+            this.clearState();
+            console.log(this.state);
           } }
         >
           <label>
@@ -122,8 +127,8 @@ const mapStateToProps = ({ wallet, exchangeRates }) => ({
 WalletForm.propTypes = {
   currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
   dispatch: PropTypes.func.isRequired,
-  // exchangeRates: PropTypes.shape({
-  // }).isRequired,
+  exchangeRates: PropTypes.shape({
+  }).isRequired,
 };
 
 export default connect(mapStateToProps)(WalletForm);
