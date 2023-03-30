@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { addExpense, fetchExchange } from '../redux/actions';
+import { addExpense } from '../redux/actions';
 
 class WalletForm extends Component {
   constructor(props) {
