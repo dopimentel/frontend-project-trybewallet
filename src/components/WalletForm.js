@@ -21,7 +21,17 @@ class WalletForm extends Component {
     this.setState({ [name]: value });
   }
 
-  clearState() {
+  async handleClick() {
+    const { dispatch } = this.props;
+    const exchangeRates = await
+    fetch('https://economia.awesomeapi.com.br/json/all')
+      .then((response) => response.json())
+      .then((data) => data);
+    const expense = {
+      ...this.state,
+      exchangeRates,
+    };
+    dispatch(addExpense(expense));
     this.setState({
       value: '',
       description: '',
@@ -33,17 +43,16 @@ class WalletForm extends Component {
 
   render() {
     const { value, description, currency, method, tag } = this.state;
-    const { currencies, dispatch } = this.props;
+    const { currencies } = this.props;
     return (
       <>
         <div>WalletForm</div>
         <form
           onSubmit={ (e) => {
             e.preventDefault();
-            dispatch(fetchExchange());
-            dispatch(addExpense(this.state));
-            this.clearState();
-            console.log(this.state);
+            // const expense = { ...this.state, exchangeRates };
+            this.handleClick();
+            // console.log(this.state);
           } }
         >
           <label>
@@ -118,17 +127,14 @@ class WalletForm extends Component {
   }
 }
 
-const mapStateToProps = ({ wallet, exchangeRates }) => ({
+const mapStateToProps = ({ wallet }) => ({
   currencies: wallet.currencies,
   expenses: wallet.expenses,
-  exchangeRates,
 });
 
 WalletForm.propTypes = {
   currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
   dispatch: PropTypes.func.isRequired,
-  exchangeRates: PropTypes.shape({
-  }).isRequired,
 };
 
 export default connect(mapStateToProps)(WalletForm);

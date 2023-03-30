@@ -20,12 +20,16 @@ class Header extends Component {
 
 const mapStateToProps = ({ user, wallet }) => ({
   email: user.email,
-  totalValue: wallet.expenses.reduce((acc, cur) => acc + parseInt(cur.value, 10), 0),
+  totalValue: wallet.expenses.reduce((acc, cur) => {
+    const { currency } = cur;
+    const { ask } = cur.exchangeRates[currency];
+    return acc + (parseFloat(cur.value) * parseFloat(ask));
+  }, 0).toFixed(2),
 });
 
 Header.propTypes = {
   email: PropTypes.string.isRequired,
-  totalValue: PropTypes.number.isRequired,
+  totalValue: PropTypes.string.isRequired,
 };
 
 export default connect(mapStateToProps)(Header);

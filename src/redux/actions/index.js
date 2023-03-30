@@ -13,10 +13,9 @@ export const saveEmail = (email) => ({
   email,
 });
 
-export const addExpense = (localState, exchangeRates) => ({
+export const addExpense = (expense) => ({
   type: ADD_EXPENSE,
-  localState,
-  exchangeRates,
+  expense,
 });
 
 export const saveCurrencies = (currencies) => ({
