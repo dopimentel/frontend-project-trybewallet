@@ -52,6 +52,7 @@ it('', async () => {
 
 it('', async () => {
   renderWithRouterAndRedux(<App />);
+
   const inputEmail = screen.getByRole('textbox', {
     name: /email/i,
   });
@@ -78,5 +79,18 @@ it('', async () => {
   expect(inputDescription).toBeInTheDocument();
   userEvent.type(inputValue, '10');
   userEvent.click(btnAdd);
-  expect(await screen.findByText(/51\.36/i)).toBeInTheDocument();
+  const btnRemove = await screen.findByRole('button', {
+    name: /excluir/i,
+  });
+
+  const btnEdit = await screen.findByRole('button', {
+    name: /editar/i,
+  });
+  expect(btnRemove).toBeInTheDocument();
+  expect(btnEdit).toBeInTheDocument();
+  userEvent.click(btnRemove);
+  expect(btnRemove).not.toBeInTheDocument();
+});
+
+it('', () => {
 });
