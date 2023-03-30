@@ -4,8 +4,8 @@ const URL = 'https://economia.awesomeapi.com.br/json/all';
 export const SAVE_EMAIL = 'SAVE_EMAIL';
 export const SAVE_CURRENCIES = 'SAVE_CURRENCIES';
 export const ADD_EXPENSE = 'ADD_EXPENSE';
-
 export const SAVE_EXCHANGE = 'SAVE_EXCHANGE';
+export const REMOVE_EXPENSE = 'REMOVE_EXPENSE';
 
 // ACTIONS CREATORS
 export const saveEmail = (email) => ({
@@ -25,6 +25,11 @@ export const saveCurrencies = (currencies) => ({
 export const saveExchange = (exchangeRates) => ({
   type: SAVE_EXCHANGE,
   exchangeRates,
+});
+
+export const removeExpense = (id) => ({
+  type: REMOVE_EXPENSE,
+  id,
 });
 
 export const fetchAwesomeAPI = () => (dispatch) => {
