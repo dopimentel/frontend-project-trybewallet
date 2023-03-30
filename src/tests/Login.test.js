@@ -91,6 +91,3 @@ it('', async () => {
   userEvent.click(btnRemove);
   expect(btnRemove).not.toBeInTheDocument();
 });
-
-it('', () => {
-});
